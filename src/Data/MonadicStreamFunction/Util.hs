@@ -81,11 +81,6 @@ withSideEffect_ method = withSideEffect $ const method
 
 -- See also: 'iPre'
 
--- | Preprends a fixed output to an 'MSF'. The first input is completely
--- ignored.
-iPost :: Monad m => b -> MSF m a b -> MSF m a b
-iPost b sf = MSF $ \_ -> return (b, sf)
-
 -- | Preprends a fixed output to an 'MSF', shifting the output.
 next :: Monad m => b -> MSF m a b -> MSF m a b
 next b sf = sf >>> delay b

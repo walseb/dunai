@@ -228,3 +228,10 @@ reactimateExcept msfe = do
 -- | Reactimates an 'MSF' until it returns 'True'.
 reactimateB :: Monad m => MSF m () Bool -> m ()
 reactimateB sf = reactimateExcept $ try $ liftMSFTrans sf >>> throwOn ()
+
+-- | Preprends a fixed output to an 'MSF'. The first input is completely
+-- ignored.
+iPost :: Monad m => b -> MSF m a b -> MSF m a b
+iPost b msf = safely $ do
+  step $ const $ return (b, ())
+  safe msf
